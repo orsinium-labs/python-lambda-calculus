@@ -4,7 +4,7 @@ import pytest
 
 from code import AND, OR, TRUE, FALSE, NOT, XOR
 from code import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
-from code import ADD, INC, MUL, POW, DEC, SUB
+from code import ADD, INC, MUL, POW, DEC, SUB, DIV
 from code import ISZERO, GTE, LTE, GT, LT, EQ
 from code import CONS, CAR, CDR
 from code import FAC, FIB
@@ -185,6 +185,16 @@ def test_fac(given, expected):
 ])
 def test_fib(given, expected):
     assert make_number(FIB(given)) == expected
+
+
+@pytest.mark.parametrize('left, right, expected', [
+    (ONE,  ONE, 1),
+    (TWO,  ONE, 2),
+    (FOUR, TWO, 2),
+    (SIX,  TWO, 3),
+])
+def test_div(left, right, expected):
+    assert make_number(DIV(left)(right)) == expected
 
 
 if __name__ == '__main__':

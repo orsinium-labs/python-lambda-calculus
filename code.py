@@ -51,7 +51,7 @@ CAR  = lambda p: p(TRUE)
 CDR  = lambda p: p(FALSE)
 
 
-# implementations
+# recursive
 FAC = Y(
     lambda f: lambda n: ISZERO(n)
     (lambda _: ONE)
@@ -62,6 +62,12 @@ FIB = Y(
     lambda f: lambda n: LTE(n)(TWO)
     (lambda _: ONE)
     (lambda _: ADD(f(DEC(n)))(f(DEC(DEC(n)))))
+    (ZERO)
+)
+DIV = Y(
+    lambda f: lambda a: lambda b: LTE(a)(b)
+    (lambda _: ONE)
+    (lambda _: ADD(ONE)(f(SUB(a)(b))(b)))
     (ZERO)
 )
 
