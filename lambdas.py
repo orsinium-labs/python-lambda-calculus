@@ -90,5 +90,6 @@ def make_number(f) -> int:
 
 
 # improve repr
-for name, func in locals().items():
-    func.__qualname__ = name
+for name, func in globals().copy().items():
+    if '_' not in name and name.isupper():
+        func.__qualname__ = name

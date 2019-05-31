@@ -2,13 +2,13 @@
 
 import pytest
 
-from code import AND, OR, TRUE, FALSE, NOT, XOR
-from code import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
-from code import ADD, INC, MUL, POW, DEC, SUB, DIV
-from code import ISZERO, GTE, LTE, GT, LT, EQ
-from code import CONS, CAR, CDR
-from code import FAC, FIB
-from code import make_number
+from lambdas import AND, OR, TRUE, FALSE, NOT, XOR
+from lambdas import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
+from lambdas import ADD, INC, MUL, POW, DEC, SUB, DIV
+from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
+from lambdas import CONS, CAR, CDR
+from lambdas import FAC, FIB
+from lambdas import make_number
 
 
 @pytest.mark.parametrize('left, right, expected', [
