@@ -206,5 +206,15 @@ def test_sign_unsign(given, expected):
     assert make_number(UNSIGN(SIGN(given))) == expected
 
 
+def test_sign_checks():
+    s = SIGN(TWO)
+    assert ISPOS(s) is TRUE
+    assert ISNEG(s) is FALSE
+
+    n = NEG(s)
+    assert ISPOS(n) is FALSE
+    assert ISNEG(n) is TRUE
+
+
 if __name__ == '__main__':
     pytest.main()
