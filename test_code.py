@@ -3,7 +3,7 @@ import pytest
 from code import AND, OR, TRUE, FALSE, NOT, XOR
 from code import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
 from code import ADD, INC, MUL, POW, DEC, SUB
-from code import ISZERO, GTE, LTE, GT, LT
+from code import ISZERO, GTE, LTE, GT, LT, EQ
 from code import make_number
 
 
@@ -145,6 +145,16 @@ def test_gte(left, right, expected):
 def test_gt(left, right, expected):
     assert GT(left)(right) is expected
     assert LTE(left)(right) is not expected
+
+
+@pytest.mark.parametrize('left, right, expected', [
+    (ONE, ONE, TRUE),
+    (TWO, TWO, TRUE),
+    (TWO, ONE, FALSE),
+    (ONE, TWO, FALSE),
+])
+def test_eq(left, right, expected):
+    assert EQ(left)(right) is expected
 
 
 if __name__ == '__main__':

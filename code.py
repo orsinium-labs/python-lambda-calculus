@@ -37,6 +37,7 @@ GTE = lambda a: lambda b: ISZERO(SUB(b)(a))
 LTE = lambda a: lambda b: ISZERO(SUB(a)(b))
 GT  = lambda a: lambda b: ISZERO(SUB(INC(b))(a))
 LT  = lambda a: lambda b: ISZERO(SUB(INC(a))(b))
+EQ  = lambda a: lambda b: AND(GTE(a)(b))(LTE(a)(b))
 
 
 # helpers
