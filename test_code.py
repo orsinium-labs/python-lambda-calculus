@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import pytest
 
 from code import AND, OR, TRUE, FALSE, NOT, XOR
