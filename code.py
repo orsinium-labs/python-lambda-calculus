@@ -51,6 +51,21 @@ CAR  = lambda p: p(TRUE)
 CDR  = lambda p: p(FALSE)
 
 
+# implementations
+FAC = Y(
+    lambda f: lambda n: ISZERO(n)
+    (lambda _: ONE)
+    (lambda _: MUL(n)(f(DEC(n))))
+    (ZERO)
+)
+FIB = Y(
+    lambda f: lambda n: LTE(n)(TWO)
+    (lambda _: ONE)
+    (lambda _: ADD(f(DEC(n)))(f(DEC(DEC(n)))))
+    (ZERO)
+)
+
+
 # helpers
 
 def make_number(f) -> int:

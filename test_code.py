@@ -7,6 +7,7 @@ from code import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
 from code import ADD, INC, MUL, POW, DEC, SUB
 from code import ISZERO, GTE, LTE, GT, LT, EQ
 from code import CONS, CAR, CDR
+from code import FAC, FIB
 from code import make_number
 
 
@@ -164,6 +165,26 @@ def test_pair():
     c = CONS(16)(42)
     assert CAR(c) == 16
     assert CDR(c) == 42
+
+
+@pytest.mark.parametrize('given, expected', [
+    (THREE, 6),
+    (FOUR,  24),
+])
+def test_fac(given, expected):
+    assert make_number(FAC(given)) == expected
+
+
+@pytest.mark.parametrize('given, expected', [
+    (ONE,   1),
+    (TWO,   1),
+    (THREE, 2),
+    (FOUR,  3),
+    (FIVE,  5),
+    (SIX,   8),
+])
+def test_fib(given, expected):
+    assert make_number(FIB(given)) == expected
 
 
 if __name__ == '__main__':
