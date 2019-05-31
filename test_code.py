@@ -2,7 +2,7 @@ import pytest
 
 from code import AND, OR, TRUE, FALSE, NOT, XOR
 from code import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
-from code import ADD, INC, MUL, POW
+from code import ADD, INC, MUL, POW, DEC, SUB
 from code import ISZERO
 from code import make_number
 
@@ -57,25 +57,24 @@ def test_numbers(given, expected):
     assert make_number(given) == expected
 
 
-@pytest.mark.parametrize('left, right, expected', [
-    (ONE,   ONE,   1),
-    (TWO,   ONE,   2),
-    (ONE,   TWO,   1),
-    (THREE, TWO,   9),
-    (THREE, THREE, 27),
-])
-def test_pow(left, right, expected):
-    assert make_number(POW(left)(right)) == expected
-
-
 @pytest.mark.parametrize('given, expected', [
     (ZERO,  1),
     (ONE,   2),
     (TWO,   3),
     (THREE, 4),
 ])
-def test_incr(given, expected):
+def test_inc(given, expected):
     assert make_number(INC(given)) == expected
+
+
+@pytest.mark.parametrize('given, expected', [
+    (ZERO,  0),
+    (ONE,   0),
+    (TWO,   1),
+    (THREE, 2),
+])
+def test_dec(given, expected):
+    assert make_number(DEC(given)) == expected
 
 
 @pytest.mark.parametrize('left, right, expected', [
@@ -88,12 +87,33 @@ def test_add(left, right, expected):
 
 
 @pytest.mark.parametrize('left, right, expected', [
+    (ONE,   ONE, 0),
+    (TWO,   ONE, 1),
+    (THREE, TWO, 1),
+    (FOUR,  ONE, 3),
+])
+def test_sub(left, right, expected):
+    assert make_number(SUB(left)(right)) == expected
+
+
+@pytest.mark.parametrize('left, right, expected', [
     (ONE, ONE,   1),
     (TWO, THREE, 6),
     (THREE, TWO, 6),
 ])
 def test_mul(left, right, expected):
     assert make_number(MUL(left)(right)) == expected
+
+
+@pytest.mark.parametrize('left, right, expected', [
+    (ONE,   ONE,   1),
+    (TWO,   ONE,   2),
+    (ONE,   TWO,   1),
+    (THREE, TWO,   9),
+    (THREE, THREE, 27),
+])
+def test_pow(left, right, expected):
+    assert make_number(POW(left)(right)) == expected
 
 
 @pytest.mark.parametrize('given, expected', [
