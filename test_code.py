@@ -3,7 +3,7 @@ import pytest
 from code import AND, OR, TRUE, FALSE, NOT, XOR
 from code import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
 from code import ADD, INC, MUL, POW, DEC, SUB
-from code import ISZERO
+from code import ISZERO, GTE, LTE, GT, LT
 from code import make_number
 
 
@@ -123,6 +123,28 @@ def test_pow(left, right, expected):
 ])
 def test_iszero(given, expected):
     assert ISZERO(given) is expected
+
+
+@pytest.mark.parametrize('left, right, expected', [
+    (ONE,   ONE,    TRUE),
+    (TWO,   THREE,  FALSE),
+    (THREE, TWO,    TRUE),
+    (FOUR,  TWO,    TRUE),
+])
+def test_gte(left, right, expected):
+    assert GTE(left)(right) is expected
+    assert LT(left)(right) is not expected
+
+
+@pytest.mark.parametrize('left, right, expected', [
+    (ONE,   ONE,    FALSE),
+    (TWO,   THREE,  FALSE),
+    (THREE, TWO,    TRUE),
+    (FOUR,  TWO,    TRUE),
+])
+def test_gt(left, right, expected):
+    assert GT(left)(right) is expected
+    assert LTE(left)(right) is not expected
 
 
 if __name__ == '__main__':
