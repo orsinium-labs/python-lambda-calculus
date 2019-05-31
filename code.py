@@ -39,6 +39,17 @@ GT  = lambda a: lambda b: ISZERO(SUB(INC(b))(a))
 LT  = lambda a: lambda b: ISZERO(SUB(INC(a))(b))
 EQ  = lambda a: lambda b: AND(GTE(a)(b))(LTE(a)(b))
 
+# combinators
+I = IDENTITY
+K = lambda a: lambda b: a
+S = lambda a: lambda b: lambda c: a(c)(b(c))
+Y = lambda f: (lambda x: f(lambda y: x(x)(y)))(lambda x: f(lambda y: x(x)(y)))
+
+# pair
+CONS = lambda a: lambda b: lambda c: c(a)(b)
+CAR  = lambda p: p(TRUE)
+CDR  = lambda p: p(FALSE)
+
 
 # helpers
 
