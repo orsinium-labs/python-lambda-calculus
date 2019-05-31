@@ -7,6 +7,7 @@ from lambdas import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
 from lambdas import ADD, INC, MUL, POW, DEC, SUB, DIV
 from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import CONS, CAR, CDR
+from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG
 from lambdas import FAC, FIB
 from lambdas import make_number
 
@@ -195,6 +196,14 @@ def test_fib(given, expected):
 ])
 def test_div(left, right, expected):
     assert make_number(DIV(left)(right)) == expected
+
+
+@pytest.mark.parametrize('given, expected', [
+    (THREE, 3),
+    (FOUR,  4),
+])
+def test_sign_unsign(given, expected):
+    assert make_number(UNSIGN(SIGN(given))) == expected
 
 
 if __name__ == '__main__':

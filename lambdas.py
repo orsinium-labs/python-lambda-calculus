@@ -55,10 +55,10 @@ NULL   = lambda _: TRUE
 ISNULL = lambda _: lambda _: FALSE
 
 # signed numbers
-SIGN   = lambda n: CONS(n)(0)
+SIGN   = lambda n: CONS(n)(ZERO)
 NEG    = lambda p: CONS(CDR(p))(CAR(p))
-ISPOS  = lambda p: GT(CAR(p))(0)
-ISNEG  = lambda p: GT(CDR(p))(0)
+ISPOS  = lambda p: GT(CAR(p))(ZERO)
+ISNEG  = lambda p: GT(CDR(p))(ZERO)
 UNSIGN = lambda p: SUB(CAR(p))(CDR(p))
 
 # recursive
