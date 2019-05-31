@@ -50,6 +50,16 @@ CONS = lambda a: lambda b: lambda c: c(a)(b)
 CAR  = lambda p: p(TRUE)
 CDR  = lambda p: p(FALSE)
 
+# The Billion Dollar Mistake
+NULL   = lambda _: TRUE
+ISNULL = lambda _: lambda _: FALSE
+
+# signed numbers
+SIGN   = lambda n: CONS(n)(0)
+NEG    = lambda p: CONS(CDR(p))(CAR(p))
+ISPOS  = lambda p: GT(CAR(p))(0)
+ISNEG  = lambda p: GT(CDR(p))(0)
+UNSIGN = lambda p: SUB(CAR(p))(CDR(p))
 
 # recursive
 FAC = Y(
@@ -77,3 +87,8 @@ DIV = Y(
 def make_number(f) -> int:
     incr = lambda x: x + 1
     return f(incr)(0)
+
+
+# improve repr
+for name, func in locals().items():
+    func.__qualname__ = name
