@@ -6,6 +6,7 @@ from code import AND, OR, TRUE, FALSE, NOT, XOR
 from code import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
 from code import ADD, INC, MUL, POW, DEC, SUB
 from code import ISZERO, GTE, LTE, GT, LT, EQ
+from code import CONS, CAR, CDR
 from code import make_number
 
 
@@ -157,6 +158,12 @@ def test_gt(left, right, expected):
 ])
 def test_eq(left, right, expected):
     assert EQ(left)(right) is expected
+
+
+def test_pair():
+    c = CONS(16)(42)
+    assert CAR(c) == 16
+    assert CDR(c) == 42
 
 
 if __name__ == '__main__':
