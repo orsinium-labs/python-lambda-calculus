@@ -62,7 +62,7 @@ NEG    = lambda p: CONS(NOT(CAR(p)))(CDR(p))
 ISPOS  = lambda p: CAR(p)
 ISNEG  = lambda p: NOT(CAR(p))
 UNSIGN = lambda p: CDR(p)
-SADD = lambda a: lambda b: (
+SADD   = lambda a: lambda b: (
     XNOR(CAR(a))(CAR(b))
     (CONS(CAR(a))(ADD(CDR(a))(CDR(b))))  # same sign
     (
@@ -71,6 +71,7 @@ SADD = lambda a: lambda b: (
         (DIFF(CDR(a))(CDR(b)))   # calculate value
     )
 )
+SSUB = lambda a: lambda b: SADD(a)(CONS(NOT(CAR(b)))(CDR(b)))
 
 # recursive
 FAC = Y(
