@@ -7,7 +7,7 @@ from lambdas import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
 from lambdas import ADD, INC, MUL, POW, DEC, SUB, DIV
 from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import CONS, CAR, CDR
-from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG, SADD, SSUB
+from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG, SADD, SSUB, SMUL
 from lambdas import FAC, FIB
 from lambdas import make_number
 
@@ -238,6 +238,20 @@ def test_ssub(lsign, left, rsign, right, expsign, expvalue):
     lv = CONS(lsign)(left)
     rv = CONS(rsign)(right)
     res = SSUB(lv)(rv)
+    assert CAR(res) is expsign
+    assert make_number(CDR(res)) == expvalue
+
+
+@pytest.mark.parametrize('lsign, left, rsign, right, expsign, expvalue', [
+    (TRUE, TWO, TRUE, THREE, TRUE, 6),  # 2 * 3 = 6
+    (TRUE, TWO, FALSE, THREE, FALSE, 6),  # 2 * (-3) = -6
+    (FALSE, TWO, TRUE, THREE, FALSE, 6),  # -2 * 3 = -6
+    (FALSE, TWO, FALSE, THREE, TRUE, 6),  # -2 * (-3) = 6
+])
+def test_smul(lsign, left, rsign, right, expsign, expvalue):
+    lv = CONS(lsign)(left)
+    rv = CONS(rsign)(right)
+    res = SMUL(lv)(rv)
     assert CAR(res) is expsign
     assert make_number(CDR(res)) == expvalue
 

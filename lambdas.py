@@ -72,6 +72,7 @@ SADD   = lambda a: lambda b: (
     )
 )
 SSUB = lambda a: lambda b: SADD(a)(CONS(NOT(CAR(b)))(CDR(b)))
+SMUL = lambda a: lambda b: CONS(XNOR(CAR(a))(CAR(b)))(MUL(CDR(a))(CDR(b)))
 
 # recursive
 FAC = Y(
