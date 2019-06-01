@@ -12,7 +12,8 @@ AND = lambda a: lambda b: a(b)(FALSE)
 NOT = lambda a: a(FALSE)(TRUE)
 
 # additional boolean operations
-XOR = lambda a: lambda b: a(b(FALSE)(TRUE))(b(TRUE)(FALSE))
+XOR  = lambda a: lambda b: a(b(FALSE)(TRUE))(b(TRUE)(FALSE))
+XNOR = lambda a: lambda b: NOT(XOR(a)(b))
 
 # arithmetic
 INC = lambda n: lambda a: lambda b: a(n(a)(b))
@@ -21,6 +22,7 @@ MUL = lambda a: lambda b: lambda c: a(b(c))
 DEC = lambda n: lambda f: lambda x: n(lambda g: lambda h: h(g(f)))(lambda _: x)(IDENTITY)
 SUB = lambda a: lambda b: b(DEC)(a)
 POW = lambda a: lambda b: b(a)
+DIFF = lambda a: lambda b: ADD(SUB(a)(b))(SUB(b)(a))
 
 # numbers
 ZERO  = FALSE
@@ -60,6 +62,15 @@ NEG    = lambda p: CONS(NOT(CAR(p)))(CDR(p))
 ISPOS  = lambda p: CAR(p)
 ISNEG  = lambda p: NOT(CAR(p))
 UNSIGN = lambda p: CDR(p)
+SADD = lambda a: lambda b: (
+    XNOR(CAR(a))(CAR(b))
+    (CONS(CAR(a))(ADD(CDR(a))(CDR(b))))  # same sign
+    (
+        CONS    # opposite sign
+        (XOR(CAR(a))(LTE(CDR(a))(CDR(b))))  # calculate sign
+        (DIFF(CDR(a))(CDR(b)))   # calculate value
+    )
+)
 
 # recursive
 FAC = Y(

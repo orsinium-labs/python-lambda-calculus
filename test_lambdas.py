@@ -7,7 +7,7 @@ from lambdas import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
 from lambdas import ADD, INC, MUL, POW, DEC, SUB, DIV
 from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import CONS, CAR, CDR
-from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG
+from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG, SADD
 from lambdas import FAC, FIB
 from lambdas import make_number
 
@@ -214,6 +214,20 @@ def test_sign_checks():
     n = NEG(s)
     assert ISPOS(n) is FALSE
     assert ISNEG(n) is TRUE
+
+
+@pytest.mark.parametrize('lsign, left, rsign, right, expsign, expvalue', [
+    (TRUE, ONE, TRUE, ONE, TRUE, 2),  # 1 + 1 = 2
+    (TRUE, ONE, FALSE, TWO, FALSE, 1),  # 1 - 2 = -1
+    (FALSE, TWO, TRUE, ONE, FALSE, 1),  # -2 + 1 = -1
+    (FALSE, TWO, FALSE, ONE, FALSE, 3),  # -2 - 1 = -3
+])
+def test_sadd(lsign, left, rsign, right, expsign, expvalue):
+    lv = CONS(lsign)(left)
+    rv = CONS(rsign)(right)
+    res = SADD(lv)(rv)
+    assert CAR(res) is expsign
+    assert make_number(CDR(res)) == expvalue
 
 
 if __name__ == '__main__':
