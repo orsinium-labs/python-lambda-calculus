@@ -87,6 +87,8 @@ FIB = Y(
     (lambda _: ADD(f(DEC(n)))(f(DEC(DEC(n)))))
     (ZERO)
 )
+
+# more arithmetic
 DIV = Y(
     lambda f: lambda a: lambda b: LT(a)(b)
     (lambda _: ZERO)
@@ -99,6 +101,8 @@ MOD = Y(
     (lambda _: f(SUB(a)(b))(b))
     (ZERO)
 )
+EVEN = lambda a: ISZERO(MOD(a)(TWO))
+ODD  = lambda a: NOT(EVEN(a))
 
 
 # helpers
