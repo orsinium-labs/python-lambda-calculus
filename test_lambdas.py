@@ -9,7 +9,7 @@ from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import CONS, CAR, CDR
 from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG, SADD, SSUB, SMUL
 from lambdas import FAC, FIB
-from lambdas import make_number
+from lambdas import decode_number
 
 
 @pytest.mark.parametrize('left, right, expected', [
@@ -59,7 +59,7 @@ def test_xor(left, right, expected):
     (SIX,   6),
 ])
 def test_numbers(given, expected):
-    assert make_number(given) == expected
+    assert decode_number(given) == expected
 
 
 @pytest.mark.parametrize('given, expected', [
@@ -69,7 +69,7 @@ def test_numbers(given, expected):
     (THREE, 4),
 ])
 def test_inc(given, expected):
-    assert make_number(INC(given)) == expected
+    assert decode_number(INC(given)) == expected
 
 
 @pytest.mark.parametrize('given, expected', [
@@ -79,7 +79,7 @@ def test_inc(given, expected):
     (THREE, 2),
 ])
 def test_dec(given, expected):
-    assert make_number(DEC(given)) == expected
+    assert decode_number(DEC(given)) == expected
 
 
 @pytest.mark.parametrize('left, right, expected', [
@@ -88,7 +88,7 @@ def test_dec(given, expected):
     (THREE, TWO, 5),
 ])
 def test_add(left, right, expected):
-    assert make_number(ADD(left)(right)) == expected
+    assert decode_number(ADD(left)(right)) == expected
 
 
 @pytest.mark.parametrize('left, right, expected', [
@@ -98,7 +98,7 @@ def test_add(left, right, expected):
     (FOUR,  ONE, 3),
 ])
 def test_sub(left, right, expected):
-    assert make_number(SUB(left)(right)) == expected
+    assert decode_number(SUB(left)(right)) == expected
 
 
 @pytest.mark.parametrize('left, right, expected', [
@@ -107,7 +107,7 @@ def test_sub(left, right, expected):
     (THREE, TWO, 6),
 ])
 def test_mul(left, right, expected):
-    assert make_number(MUL(left)(right)) == expected
+    assert decode_number(MUL(left)(right)) == expected
 
 
 @pytest.mark.parametrize('left, right, expected', [
@@ -118,7 +118,7 @@ def test_mul(left, right, expected):
     (THREE, THREE, 27),
 ])
 def test_pow(left, right, expected):
-    assert make_number(POW(left)(right)) == expected
+    assert decode_number(POW(left)(right)) == expected
 
 
 @pytest.mark.parametrize('given, expected', [
@@ -173,7 +173,7 @@ def test_pair():
     (FOUR,  24),
 ])
 def test_fac(given, expected):
-    assert make_number(FAC(given)) == expected
+    assert decode_number(FAC(given)) == expected
 
 
 @pytest.mark.parametrize('given, expected', [
@@ -185,7 +185,7 @@ def test_fac(given, expected):
     (SIX,   8),
 ])
 def test_fib(given, expected):
-    assert make_number(FIB(given)) == expected
+    assert decode_number(FIB(given)) == expected
 
 
 @pytest.mark.parametrize('left, right, expected', [
@@ -195,7 +195,7 @@ def test_fib(given, expected):
     (SIX,  TWO, 3),
 ])
 def test_div(left, right, expected):
-    assert make_number(DIV(left)(right)) == expected
+    assert decode_number(DIV(left)(right)) == expected
 
 
 @pytest.mark.parametrize('given, expected', [
@@ -203,7 +203,7 @@ def test_div(left, right, expected):
     (FOUR,  4),
 ])
 def test_sign_unsign(given, expected):
-    assert make_number(UNSIGN(SIGN(given))) == expected
+    assert decode_number(UNSIGN(SIGN(given))) == expected
 
 
 def test_sign_checks():
@@ -227,7 +227,7 @@ def test_sadd(lsign, left, rsign, right, expsign, expvalue):
     rv = CONS(rsign)(right)
     res = SADD(lv)(rv)
     assert CAR(res) is expsign
-    assert make_number(CDR(res)) == expvalue
+    assert decode_number(CDR(res)) == expvalue
 
 
 @pytest.mark.parametrize('lsign, left, rsign, right, expsign, expvalue', [
@@ -239,7 +239,7 @@ def test_ssub(lsign, left, rsign, right, expsign, expvalue):
     rv = CONS(rsign)(right)
     res = SSUB(lv)(rv)
     assert CAR(res) is expsign
-    assert make_number(CDR(res)) == expvalue
+    assert decode_number(CDR(res)) == expvalue
 
 
 @pytest.mark.parametrize('lsign, left, rsign, right, expsign, expvalue', [
@@ -253,7 +253,7 @@ def test_smul(lsign, left, rsign, right, expsign, expvalue):
     rv = CONS(rsign)(right)
     res = SMUL(lv)(rv)
     assert CAR(res) is expsign
-    assert make_number(CDR(res)) == expvalue
+    assert decode_number(CDR(res)) == expvalue
 
 
 if __name__ == '__main__':

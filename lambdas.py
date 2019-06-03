@@ -97,7 +97,7 @@ DIV = Y(
 
 # helpers
 
-def make_number(f) -> int:
+def decode_number(f) -> int:
     incr = lambda x: x + 1
     return f(incr)(0)
 
