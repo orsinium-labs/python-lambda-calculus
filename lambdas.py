@@ -105,11 +105,40 @@ EVEN = lambda a: ISZERO(MOD(a)(TWO))
 ODD  = lambda a: NOT(EVEN(a))
 
 
+# lists
+LIST = CONS(TRUE)(TRUE)
+PREPEND = lambda xs: lambda x: CONS(FALSE)(CONS(x)(xs))
+EMPTY = lambda xs: CAR(xs)
+HEAD = lambda xs: CAR(CDR(xs))
+TAIL = lambda xs: CDR(CDR(xs))
+APPEND = Y(
+    lambda f: lambda xs: lambda x: EMPTY(xs)
+    (lambda _: PREPEND(xs)(x))
+    (lambda _: CONS(FALSE)(CONS(HEAD(xs))(f(TAIL(xs))(x))))
+    (TRUE)
+)
+REVERSE = Y(
+    lambda f: lambda xs: EMPTY(xs)
+    (lambda _: xs)
+    (lambda _: APPEND(f(TAIL(xs)))(HEAD(xs)))
+    (TRUE)
+)
+
+
 # helpers
 
 def decode_number(f) -> int:
     incr = lambda x: x + 1
     return f(incr)(0)
+
+
+def decode_list(encoded) -> list:
+    decoded = []
+    while 1:
+        if EMPTY(encoded) is TRUE:
+            return decoded
+        decoded.append(HEAD(encoded))
+        encoded = TAIL(encoded)
 
 
 # improve repr

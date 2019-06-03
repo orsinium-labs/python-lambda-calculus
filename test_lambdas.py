@@ -9,7 +9,8 @@ from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import CONS, CAR, CDR
 from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG, SADD, SSUB, SMUL
 from lambdas import FAC, FIB
-from lambdas import decode_number
+from lambdas import LIST, APPEND, PREPEND, REVERSE
+from lambdas import decode_number, decode_list
 
 
 @pytest.mark.parametrize('left, right, expected', [
@@ -264,6 +265,45 @@ def test_smul(lsign, left, rsign, right, expsign, expvalue):
     res = SMUL(lv)(rv)
     assert CAR(res) is expsign
     assert decode_number(CDR(res)) == expvalue
+
+
+@pytest.mark.parametrize('given', [
+    [],
+    [1],
+    [1, 2],
+    [1, 2, 3],
+])
+def test_prepend(given):
+    lst = LIST
+    for el in reversed(given):
+        lst = PREPEND(lst)(el)
+    assert decode_list(lst) == given
+
+
+@pytest.mark.parametrize('given', [
+    [],
+    [1],
+    [1, 2],
+    [1, 2, 3],
+])
+def test_append(given):
+    lst = LIST
+    for el in given:
+        lst = APPEND(lst)(el)
+    assert decode_list(lst) == given
+
+
+@pytest.mark.parametrize('given', [
+    [],
+    [1],
+    [1, 2],
+    [1, 2, 3],
+])
+def test_reverse(given):
+    lst = LIST
+    for el in given:
+        lst = PREPEND(lst)(el)
+    assert decode_list(REVERSE(lst)) == given
 
 
 if __name__ == '__main__':
