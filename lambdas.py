@@ -88,9 +88,15 @@ FIB = Y(
     (ZERO)
 )
 DIV = Y(
-    lambda f: lambda a: lambda b: LTE(a)(b)
-    (lambda _: ONE)
-    (lambda _: ADD(ONE)(f(SUB(a)(b))(b)))
+    lambda f: lambda a: lambda b: LT(a)(b)
+    (lambda _: ZERO)
+    (lambda _: INC(f(SUB(a)(b))(b)))
+    (ZERO)
+)
+MOD = Y(
+    lambda f: lambda a: lambda b: LT(a)(b)
+    (lambda _: a)
+    (lambda _: f(SUB(a)(b))(b))
     (ZERO)
 )
 
