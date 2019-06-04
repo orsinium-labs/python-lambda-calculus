@@ -129,6 +129,12 @@ MAP = Y(
     (lambda _: PREPEND(f(a)(TAIL(xs)))(a(HEAD(xs))))
     (TRUE)
 )
+RANGE = Y(
+    lambda f: lambda a: lambda b: GTE(a)(b)
+    (lambda _: LIST)
+    (lambda _: PREPEND(f(INC(a))(b))(a))
+    (TRUE)
+)
 
 
 # helpers
