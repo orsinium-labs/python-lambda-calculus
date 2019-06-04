@@ -119,8 +119,14 @@ APPEND = Y(
 )
 REVERSE = Y(
     lambda f: lambda xs: EMPTY(xs)
-    (lambda _: xs)
+    (lambda _: LIST)
     (lambda _: APPEND(f(TAIL(xs)))(HEAD(xs)))
+    (TRUE)
+)
+MAP = Y(
+    lambda f: lambda a: lambda xs: EMPTY(xs)
+    (lambda _: LIST)
+    (lambda _: PREPEND(f(a)(TAIL(xs)))(a(HEAD(xs))))
     (TRUE)
 )
 
@@ -134,11 +140,12 @@ def decode_number(f) -> int:
 
 def decode_list(encoded) -> list:
     decoded = []
-    while 1:
+    for _ in range(100):
         if EMPTY(encoded) is TRUE:
             return decoded
         decoded.append(HEAD(encoded))
         encoded = TAIL(encoded)
+    raise RuntimeError('probably infinite list')
 
 
 # improve repr

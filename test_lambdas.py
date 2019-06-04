@@ -9,7 +9,7 @@ from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import CONS, CAR, CDR
 from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG, SADD, SSUB, SMUL
 from lambdas import FAC, FIB
-from lambdas import LIST, APPEND, PREPEND, REVERSE
+from lambdas import LIST, APPEND, PREPEND, REVERSE, MAP
 from lambdas import decode_number, decode_list
 
 
@@ -304,6 +304,20 @@ def test_reverse(given):
     for el in given:
         lst = PREPEND(lst)(el)
     assert decode_list(REVERSE(lst)) == given
+
+
+@pytest.mark.parametrize('given, expected', [
+    ([], []),
+    ([ONE], [3]),
+    ([ONE, TWO, THREE], [3, 4, 5]),
+])
+def test_map(given, expected):
+    lst = LIST
+    for el in reversed(given):
+        lst = PREPEND(lst)(el)
+    result = MAP(ADD(TWO))(lst)
+    decoded = [decode_number(n) for n in decode_list(result)]
+    assert decoded == expected
 
 
 if __name__ == '__main__':
