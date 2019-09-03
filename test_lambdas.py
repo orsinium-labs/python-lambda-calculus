@@ -9,7 +9,7 @@ from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import CONS, CAR, CDR
 from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG, SADD, SSUB, SMUL
 from lambdas import FAC, FIB
-from lambdas import LIST, APPEND, PREPEND, REVERSE, MAP, RANGE, REDUCE
+from lambdas import LIST, APPEND, PREPEND, REVERSE, MAP, RANGE, REDUCE, FILTER
 from lambdas import decode_number, decode_list
 
 
@@ -362,6 +362,22 @@ def test_map(given, expected):
 ])
 def test_range(start, end, expected):
     result = RANGE(start)(end)
+    decoded = [decode_number(n) for n in decode_list(result)]
+    assert decoded == expected
+
+
+@pytest.mark.parametrize('given, expected', [
+    ([ONE], []),
+    ([ONE, ONE], []),
+    ([FOUR], [4]),
+    ([ONE, TWO], [2]),
+    ([THREE, ONE, TWO], [3, 2]),
+])
+def test_filter(given, expected):
+    lst = LIST
+    for el in given:
+        lst = APPEND(lst)(el)
+    result = FILTER(LTE(TWO))(lst)
     decoded = [decode_number(n) for n in decode_list(result)]
     assert decoded == expected
 

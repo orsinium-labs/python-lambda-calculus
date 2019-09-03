@@ -150,17 +150,19 @@ RANGE = Y(
 # 1. Apply pass head of `l` and `v` into `r` and save result into `v`.
 # 2. Do it for every element into lest from left to right.
 # 3. Return `v` (accumulated value)
-REDUCE = LFOLD = Y(
-    lambda f: lambda r: lambda l: lambda v:
-    EMPTY(l)
+REDUCE = FOLD = Y(
+    lambda f: lambda r: lambda l: lambda v: EMPTY(l)
     (lambda _: v)  # if list is empty, return accumulated value (v)
-    (
-        lambda _: (
-            f(r)(TAIL(l))  # do reucing on tail of list (l) with a new accumulated value (v)
-            (r(HEAD(l))(v))  # pass accumulated value (v) and head into reducer (r)
-        )
-    )
+    # pass accumulated value (v) and head into reducer (r)
+    # do reucing on tail of list (l) with a new accumulated value (v)
+    (lambda _: f(r)(TAIL(l))(r(HEAD(l))(v)))
     (TRUE)
+)
+FILTER = lambda f: lambda l: (
+    REDUCE
+    (lambda x: lambda xs: f(x)(APPEND(xs)(x))(xs))
+    (l)
+    (LIST)
 )
 
 
