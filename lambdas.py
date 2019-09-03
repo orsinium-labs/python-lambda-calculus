@@ -132,6 +132,8 @@ REVERSE = Y(
     (lambda _: APPEND(f(TAIL(xs)))(HEAD(xs)))
     (TRUE)
 )
+# MAP(a)(xs): apply `a` function to every element in `xs` list.
+# Return list of results for every element.
 MAP = Y(
     lambda f: lambda a: lambda xs: EMPTY(xs)
     (lambda _: LIST)
