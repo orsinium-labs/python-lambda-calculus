@@ -4,7 +4,7 @@ import pytest
 
 from lambdas import AND, OR, TRUE, FALSE, NOT, XOR
 from lambdas import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
-from lambdas import ADD, INC, MUL, POW, DEC, SUB, DIV, MOD
+from lambdas import ADD, INC, MUL, POW, DEC, SUB, DIV, MOD, MIN, MAX
 from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import CONS, CAR, CDR
 from lambdas import SIGN, UNSIGN, NEG, ISPOS, ISNEG, SADD, SSUB, SMUL
@@ -198,6 +198,28 @@ def test_fib(given, expected):
 ])
 def test_div(left, right, expected):
     assert decode_number(DIV(left)(right)) == expected
+
+
+@pytest.mark.parametrize('left, right, expected', [
+    (ONE,   ONE,    1),
+    (TWO,   ONE,    1),
+    (ONE,   TWO,    1),
+    (THREE, FIVE,   3),
+    (FIVE,  THREE,  3),
+])
+def test_min(left, right, expected):
+    assert decode_number(MIN(left)(right)) == expected
+
+
+@pytest.mark.parametrize('left, right, expected', [
+    (ONE,   ONE,    1),
+    (TWO,   ONE,    2),
+    (ONE,   TWO,    2),
+    (THREE, FIVE,   5),
+    (FIVE,  THREE,  5),
+])
+def test_max(left, right, expected):
+    assert decode_number(MAX(left)(right)) == expected
 
 
 @pytest.mark.parametrize('left, right, expected', [

@@ -32,6 +32,10 @@ THREE = lambda a: lambda b: a(a(a(b)))
 FOUR  = INC(THREE)
 FIVE  = ADD(TWO)(THREE)
 SIX   = MUL(TWO)(THREE)
+SEVEN = INC(SIX)
+EIGHT = MUL(FOUR)(TWO)
+NINE  = POW(THREE)(TWO)
+TEN   = MUL(FIVE)(TWO)
 
 # checks
 ISZERO = lambda a: a(lambda _: FALSE)(TRUE)
@@ -43,9 +47,12 @@ EQ  = lambda a: lambda b: AND(GTE(a)(b))(LTE(a)(b))
 
 # combinators
 I = IDENTITY
-K = lambda a: lambda b: a
+K = TRUE
 S = lambda a: lambda b: lambda c: a(c)(b(c))
-Y = lambda f: (lambda x: f(lambda y: x(x)(y)))(lambda x: f(lambda y: x(x)(y)))
+Y = lambda f: (
+    (lambda x: f(lambda y: x(x)(y)))
+    (lambda x: f(lambda y: x(x)(y)))
+)
 
 # pair
 CONS = lambda a: lambda b: lambda c: c(a)(b)
@@ -103,6 +110,8 @@ MOD = Y(
 )
 EVEN = lambda a: ISZERO(MOD(a)(TWO))
 ODD  = lambda a: NOT(EVEN(a))
+MIN  = lambda a: lambda b: LTE(a)(b)(a)(b)
+MAX  = lambda a: lambda b: GTE(a)(b)(a)(b)
 
 
 # lists
