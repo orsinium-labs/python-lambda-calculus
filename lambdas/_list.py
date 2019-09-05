@@ -1,4 +1,4 @@
-from ._bool import TRUE, FALSE, OR
+from ._bool import TRUE, FALSE, OR, NOT
 from ._pair import CONS, CAR, CDR
 from ._combinators import Y
 from ._natural import DEC, INC, GTE, ISZERO, ZERO
@@ -64,10 +64,21 @@ TAKE = Y(lambda f: lambda n: lambda l: (
     (TRUE)
 ))
 LENGTH = lambda l: REDUCE(lambda x: lambda n: INC(n))(l)(ZERO)
-
 INDEX = Y(lambda f: lambda n: lambda l: (
     ISZERO(n)
     (lambda _: HEAD(l))
     (lambda _: f(DEC(n))(TAIL(l)))
+    (TRUE)
+))
+ANY = Y(lambda f: lambda l: (
+    EMPTY(l)
+    (lambda _: FALSE)
+    (lambda _: HEAD(l)(TRUE)(f(TAIL(l))))
+    (TRUE)
+))
+ALL = Y(lambda f: lambda l: (
+    EMPTY(l)
+    (lambda _: TRUE)
+    (lambda _: NOT(HEAD(l))(FALSE)(f(TAIL(l))))
     (TRUE)
 ))

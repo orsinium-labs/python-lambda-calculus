@@ -1,8 +1,8 @@
 import pytest
 
 from lambdas import ZERO, ONE, TWO, THREE, FOUR
-from lambdas import ADD, LTE
-from lambdas import LIST, APPEND, PREPEND, REVERSE, LENGTH
+from lambdas import ADD, LTE, FALSE, TRUE
+from lambdas import LIST, APPEND, PREPEND, REVERSE, LENGTH, ANY, ALL
 from lambdas import MAP, RANGE, REDUCE, FILTER, TAKE, DROP, INDEX
 from lambdas import decode_number, decode_list
 
@@ -148,3 +148,33 @@ def test_index(given, number, expected):
     result = INDEX(number)(lst)
     if expected is not None:
         assert result == expected
+
+
+@pytest.mark.parametrize('given, expected', [
+    ([], FALSE),
+    ([FALSE, FALSE], FALSE),
+    ([FALSE, TRUE], TRUE),
+    ([TRUE, FALSE], TRUE),
+    ([FALSE, TRUE, FALSE], TRUE),
+])
+def test_any(given, expected):
+    lst = LIST
+    for el in given:
+        lst = APPEND(lst)(el)
+    assert ANY(lst) is expected
+
+
+@pytest.mark.parametrize('given, expected', [
+    ([], TRUE),
+    ([TRUE], TRUE),
+    ([TRUE, TRUE], TRUE),
+    ([FALSE, FALSE], FALSE),
+    ([FALSE, TRUE], FALSE),
+    ([TRUE, FALSE], FALSE),
+    ([FALSE, TRUE, FALSE], FALSE),
+])
+def test_all(given, expected):
+    lst = LIST
+    for el in given:
+        lst = APPEND(lst)(el)
+    assert ALL(lst) is expected
