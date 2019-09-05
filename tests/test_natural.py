@@ -1,7 +1,7 @@
 import pytest
 
 from lambdas import TRUE, FALSE
-from lambdas import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
+from lambdas import ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN
 from lambdas import ADD, INC, MUL, POW, DEC, SUB
 from lambdas import ISZERO, GTE, LTE, GT, LT, EQ
 from lambdas import decode_number
@@ -14,6 +14,10 @@ from lambdas import decode_number
     (FOUR,  4),
     (FIVE,  5),
     (SIX,   6),
+    (SEVEN, 7),
+    (EIGHT, 8),
+    (NINE,  9),
+    (TEN,   10),
 ])
 def test_numbers(given, expected):
     assert decode_number(given) == expected

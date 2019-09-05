@@ -2,7 +2,8 @@ import pytest
 
 from lambdas import ZERO, ONE, TWO, THREE, FOUR
 from lambdas import ADD, LTE
-from lambdas import LIST, APPEND, PREPEND, REVERSE, MAP, RANGE, REDUCE, FILTER
+from lambdas import LIST, APPEND, PREPEND, REVERSE
+from lambdas import MAP, RANGE, REDUCE, FILTER, TAKE, DROP
 from lambdas import decode_number, decode_list
 
 
@@ -97,3 +98,28 @@ def test_filter(given, expected):
     result = FILTER(LTE(TWO))(lst)
     decoded = [decode_number(n) for n in decode_list(result)]
     assert decoded == expected
+
+
+@pytest.mark.parametrize('given, number, expected', [
+    ([1, 2, 3], ONE, [2, 3]),
+])
+def test_drop(given, number, expected):
+    lst = LIST
+    for el in given:
+        lst = APPEND(lst)(el)
+    result = DROP(number)(lst)
+    assert decode_list(result) == expected
+
+
+@pytest.mark.parametrize('given, number, expected', [
+    ([1, 2, 3], TWO, [1, 2]),
+    ([1, 2, 3], FOUR, [1, 2, 3]),
+    ([1, 2, 3], ZERO, []),
+    ([], TWO, []),
+])
+def test_take(given, number, expected):
+    lst = LIST
+    for el in given:
+        lst = APPEND(lst)(el)
+    result = TAKE(number)(lst)
+    assert decode_list(result) == expected

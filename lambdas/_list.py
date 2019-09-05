@@ -1,7 +1,7 @@
-from ._bool import TRUE, FALSE
+from ._bool import TRUE, FALSE, OR
 from ._pair import CONS, CAR, CDR
 from ._combinators import Y
-from ._natural import INC, GTE
+from ._natural import DEC, INC, GTE, ISZERO
 
 
 LIST = CONS(TRUE)(TRUE)
@@ -53,3 +53,13 @@ FILTER = lambda f: lambda l: (
     (l)
     (LIST)
 )
+DROP = lambda n: lambda l: n(TAIL)(l)
+TAKE = Y(lambda f: lambda n: lambda l: (
+    OR(EMPTY(l))(ISZERO(n))
+    (lambda _: LIST)
+    (lambda _: (
+        PREPEND(f(DEC(n))(TAIL(l)))
+        (HEAD(l))
+    ))
+    (TRUE)
+))
