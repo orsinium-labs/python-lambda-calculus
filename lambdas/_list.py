@@ -1,7 +1,7 @@
 from ._bool import TRUE, FALSE, OR
 from ._pair import CONS, CAR, CDR
 from ._combinators import Y
-from ._natural import DEC, INC, GTE, ISZERO
+from ._natural import DEC, INC, GTE, ISZERO, ZERO
 
 
 LIST = CONS(TRUE)(TRUE)
@@ -61,5 +61,13 @@ TAKE = Y(lambda f: lambda n: lambda l: (
         PREPEND(f(DEC(n))(TAIL(l)))
         (HEAD(l))
     ))
+    (TRUE)
+))
+LENGTH = lambda l: REDUCE(lambda x: lambda n: INC(n))(l)(ZERO)
+
+INDEX = Y(lambda f: lambda n: lambda l: (
+    ISZERO(n)
+    (lambda _: HEAD(l))
+    (lambda _: f(DEC(n))(TAIL(l)))
     (TRUE)
 ))

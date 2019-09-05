@@ -2,8 +2,8 @@ import pytest
 
 from lambdas import ZERO, ONE, TWO, THREE, FOUR
 from lambdas import ADD, LTE
-from lambdas import LIST, APPEND, PREPEND, REVERSE
-from lambdas import MAP, RANGE, REDUCE, FILTER, TAKE, DROP
+from lambdas import LIST, APPEND, PREPEND, REVERSE, LENGTH
+from lambdas import MAP, RANGE, REDUCE, FILTER, TAKE, DROP, INDEX
 from lambdas import decode_number, decode_list
 
 
@@ -123,3 +123,28 @@ def test_take(given, number, expected):
         lst = APPEND(lst)(el)
     result = TAKE(number)(lst)
     assert decode_list(result) == expected
+
+
+@pytest.mark.parametrize('given, expected', [
+    ([], 0),
+    ([4], 1),
+    ([4, 5], 2),
+    ([1, 2, 3], 3),
+])
+def test_length(given, expected):
+    lst = LIST
+    for el in given:
+        lst = APPEND(lst)(el)
+    assert decode_number(LENGTH(lst)) == expected
+
+
+@pytest.mark.parametrize('given, number, expected', [
+    ([1, 2, 3], ONE, 2),
+])
+def test_index(given, number, expected):
+    lst = LIST
+    for el in given:
+        lst = APPEND(lst)(el)
+    result = INDEX(number)(lst)
+    if expected is not None:
+        assert result == expected
