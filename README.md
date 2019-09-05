@@ -2,7 +2,7 @@
 
 ## Lambda Calculus functions implementation on Python
 
-This repository contains [lambdas.py](./lambdas.py) with implemented lambdas and [test_lambdas.py](./test_lambdas.py) with pytest-based tests for it. To run tests execute `./test_code.py`.
+This repository contains [lambdas](./lambdas/) with implemented lambdas and [tests](./tests/) with pytest-based tests for it. To run tests execute `pytest`.
 
 ## Read more
 
